@@ -13,8 +13,8 @@ typedef struct _Course
 } Course;
 
 // Course * Create_Course(char div[], int dept, int course_num, float credits, char title[]);
-void get_course_parts(Course * u, char course_line[], char title[]);
-Course * Create_Course(char course_line[]);
+void get_course_parts(Course * u, char course_line[], unsigned int line_length);
+Course * Create_Course(char course_line[], unsigned int line_length);
 void print_course_info(Course * u);
 
 #endif // CATALOG defined

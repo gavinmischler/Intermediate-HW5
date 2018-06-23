@@ -48,8 +48,9 @@ int main(int argc, char const *argv[]) {
   //   catalog[i] = Create_Course();
   //
   // }
-  char test_course_line[] = "EN.300.30 3.2 test course line";
-  Course *test_course = Create_Course(test_course_line);
+  char test_course_line[] = "EN.300.101 3.5 test course line2";
+  unsigned int line_length = sizeof(test_course_line)/sizeof(char);
+  Course *test_course = Create_Course(test_course_line, line_length);
   print_course_info(test_course);
 
   return 0;
