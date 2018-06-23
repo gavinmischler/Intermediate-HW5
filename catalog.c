@@ -13,12 +13,9 @@ void get_course_parts(Course * u, char course_line[], unsigned int line_length) 
   for (pos = 0; pos < 3; pos++) {
     credits_str[pos] = course_line[11+pos];
     if (course_line[11+pos] == '.') {
-      printf("got here\n");
     }
-    printf("adding %c\n", course_line[11+pos]);
   }
   credits_str[pos] = '\0';
-  printf("num_credits is %s\n", credits_str);
   u->credits = atof(credits_str);
 
   int num_title_chars = line_length - 15;

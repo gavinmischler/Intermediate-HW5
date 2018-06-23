@@ -31,7 +31,6 @@ int main(int argc, char const *argv[]) {
   int line_count = 0;
   char line[50];
   while (fgets(line, 50, fp)) {
-    printf("At line: %d\n", line_count);
     line_count += 1;
   }
   fclose(fp);
@@ -39,19 +38,22 @@ int main(int argc, char const *argv[]) {
 
   fp = fopen(filepath, "r");
   Course * catalog[line_count];
-
-  // while (fgets(line, 50, fp)) {
-  //   printf("line= %s\n", line);
-  // }
-    fclose(fp);
+  int c = 0;
+  while (fgets(line, 50, fp)) {
+    unsigned int line_length = sizeof(line)/sizeof(char);
+    catalog[c] = Create_Course(line, line_length);
+    c++;
+  }
+  printf("added %d courses to catalog\n", c);
+  fclose(fp);
   // for (int i = 0; i < line_count; i++) {
   //   catalog[i] = Create_Course();
   //
   // }
-  char test_course_line[] = "EN.300.101 3.5 test course line2";
-  unsigned int line_length = sizeof(test_course_line)/sizeof(char);
-  Course *test_course = Create_Course(test_course_line, line_length);
-  print_course_info(test_course);
+
+  for (int j = 0; j < line_count; j++) {
+    print_course_info(catalog[j]);
+  }
 
   return 0;
 }
