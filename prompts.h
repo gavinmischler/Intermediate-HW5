@@ -16,4 +16,4 @@ void new_title_prompt();
 void new_credit_prompt();
 void gpa_msg();
 
-#endif PROMPTS_H // Prompts defined
+#endif // Prompts defined

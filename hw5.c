@@ -10,10 +10,10 @@
 #include "catalog.h"
 #include "prompts.h"
 
-int int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[]) {
 
   char *filepath;
-  if (argc = 2) {
+  if (argc == 2) {
     filepath = malloc(strlen(argv[1]+1));
     strcpy(filepath, argv[1]);
   } else {
@@ -22,6 +22,11 @@ int int main(int argc, char const *argv[]) {
   }
 
   FILE *fp = fopen(filepath, "r");
+  if (fp == NULL) {
+    printf("Error: input file not opened\n");
+    free(filepath);
+    return -1;
+  }
 
   int line_count = 0;
   char line[50];
@@ -29,7 +34,23 @@ int int main(int argc, char const *argv[]) {
     printf("At line: %d\n", line_count);
     line_count += 1;
   }
-  printf("Found %d lines\n", line_count);
+  fclose(fp);
+  //printf("Found %d lines\n", line_count);
+
+  fp = fopen(filepath, "r");
+  Course * catalog[line_count];
+
+  // while (fgets(line, 50, fp)) {
+  //   printf("line= %s\n", line);
+  // }
+    fclose(fp);
+  // for (int i = 0; i < line_count; i++) {
+  //   catalog[i] = Create_Course();
+  //
+  // }
+  char test_course_line[] = "EN.300.30 3.2 test course line";
+  Course *test_course = Create_Course(test_course_line);
+  print_course_info(test_course);
 
   return 0;
 }
