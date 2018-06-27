@@ -3,8 +3,11 @@
 #include <string.h>
 #include <stdio.h>
 #include "catalog.h"
+#include "prompts.h"
 
-// Gets the division different components from the entire course line and puts them
+
+
+// Gets the different components from the entire course line and puts them
 // in pointers or arrays
 void get_course_parts(Course * u, char course_line[], unsigned int line_length) {
   char credits_str[4];
@@ -45,18 +48,38 @@ void get_course_parts(Course * u, char course_line[], unsigned int line_length) 
 
 }
 
+// Takes in a string course ID and puts the 3 components into pointers
+/*
+  Inputs:
+    char course_id[]; this is a 10 character valid course ID
+*/
+void separate_course_parts(char course_id[], char div[], int * dept, int * course_num) {
+  char * token;
+  char delim[2] = ".";
+  token = strtok(course_line, delim);
+  int num_toks = 1;
+  while (num_toks < 4 && token != NULL) {
+    if (num_toks == 1) {
+      strcpy(div, token);
+      token = strtok(NULL, delim);
+    } else if (num_toks == 2) {
+      *dept = atoi(token);
+      token = strtok(NULL, delim);
+    } else if (num_toks == 3) {
+      *course_num = atoi(token);
+      token = strtok(NULL, delim);
+    }
+    num_toks += 1;
+  }
+
+}
+
 // Creates a pointer to a Course data type which is a struct containing all the components
 // of the course from the catalog
 Course * Create_Course(char course_line[], unsigned int line_length) {
   Course * u = malloc(sizeof(Course));
   assert(u);
-//
-
-  // *dept = 1;
-  // *course_num = 111;
-  // *credits = 1.1;
   get_course_parts(u, course_line, line_length);
-//
 
   // strcpy((u->div), div);
   // u->dept = *dept;
@@ -65,6 +88,37 @@ Course * Create_Course(char course_line[], unsigned int line_length) {
   return u;
 }
 
+// Checks if the user has input a valid course ID
+/*
+  Returns: 1 if valid, 0 if invalid
+*/
+int is_valid_course(char course_id[], unsigned long id_length) {
+  if (id_length != 10) {
+    invalid_input_msg();
+    return 0;
+  }
+  int period_count = 0;
+  for (unsigned long j = 0; j < id_length; j++) {
+    char temp_char = course_id[j];
+    if (temp_char == '.' && (j != 2 && j != 6)) {
+      invalid_input_msg();
+      return 0;
+    } else if ((j == 2 || j == 6) && temp_char != '.') {
+      invalid_input_msg();
+      return 0;
+    }
+  }
+  return 1;
+}
+
+// Repeatedly asks the user for a course id until they provide a valid one
+void get_course_input(char user_menu_input[]) {
+  do {
+    course_prompt();
+    scanf("%s", user_menu_input);
+  } while(!(is_valid_course(user_menu_input, strlen(user_menu_input))));
+}
+
 void print_course_info(Course * u) {
-  printf("%s.%d.%d %.1f %s\n", u->div, u->dept, u->course_num, u->credits, u->title);
+  printf("%s.%d.%d %.1f %s", u->div, u->dept, u->course_num, u->credits, u->title);
 }

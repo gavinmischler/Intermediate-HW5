@@ -46,13 +46,38 @@ int main(int argc, char const *argv[]) {
   }
   printf("added %d courses to catalog\n", c);
   fclose(fp);
-  // for (int i = 0; i < line_count; i++) {
-  //   catalog[i] = Create_Course();
-  //
-  // }
 
-  for (int j = 0; j < line_count; j++) {
-    print_course_info(catalog[j]);
+  char menu_selection = 'a';
+  char user_menu_input[30];
+
+  menu_prompt();
+  scanf("%s", user_menu_input);
+  menu_selection = user_menu_input[0];
+  while (menu_selection != 'q') {
+    switch (menu_selection) {
+      case '1': // Display the catalog
+        for (int j = 0; j < line_count; j++) {
+          print_course_info(catalog[j]);
+        }
+        break;
+      case '2':
+        get_course_input(user_menu_input);
+        printf("Found this valid input %s\n", user_menu_input);
+        char div[3];
+        int * dept;
+        int * course_num;
+        separate_course_parts(user_menu_input, div, dept, course_num);
+        printf("Separated: %s, %d, %d\n", div, *dept, *course_num);
+
+        break;
+
+    }
+
+
+    menu_prompt();
+    scanf("%s", user_menu_input);
+    menu_selection = user_menu_input[0];
+
   }
 
   return 0;
