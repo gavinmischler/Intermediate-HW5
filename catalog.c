@@ -48,19 +48,33 @@ void get_course_parts(Course * u, char course_line[], unsigned int line_length) 
 
 }
 
+// Finds the location of a course in the catalog based on div, dept, and course_num
+/*
+  Returns: the index of the course in the array, or -1 if not found
+*/
+int find_course_in_catalog(Course * catalog[], int catalog_sz, char div[], int *dept, int *course_num) {
+  int i;
+  for (i = 0; i < catalog_sz; i++) {
+    if (!strcmp(((catalog[i])->div), div) && (catalog[i]->dept == *dept) && (catalog[i]->course_num == *course_num)) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 // Takes in a string course ID and puts the 3 components into pointers
 /*
   Inputs:
     char course_id[]; this is a 10 character valid course ID
 */
-void separate_course_parts(char course_id[], char div[], int * dept, int * course_num) {
+void separate_course_parts(char course_id[], char divi[], int * dept, int * course_num) {
   char * token;
   char delim[2] = ".";
-  token = strtok(course_line, delim);
+  token = strtok(course_id, delim);
   int num_toks = 1;
   while (num_toks < 4 && token != NULL) {
     if (num_toks == 1) {
-      strcpy(div, token);
+      strcpy(divi, token);
       token = strtok(NULL, delim);
     } else if (num_toks == 2) {
       *dept = atoi(token);
@@ -71,7 +85,6 @@ void separate_course_parts(char course_id[], char div[], int * dept, int * cours
     }
     num_toks += 1;
   }
-
 }
 
 // Creates a pointer to a Course data type which is a struct containing all the components
@@ -97,7 +110,6 @@ int is_valid_course(char course_id[], unsigned long id_length) {
     invalid_input_msg();
     return 0;
   }
-  int period_count = 0;
   for (unsigned long j = 0; j < id_length; j++) {
     char temp_char = course_id[j];
     if (temp_char == '.' && (j != 2 && j != 6)) {

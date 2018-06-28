@@ -62,13 +62,12 @@ int main(int argc, char const *argv[]) {
         break;
       case '2':
         get_course_input(user_menu_input);
-        printf("Found this valid input %s\n", user_menu_input);
         char div[3];
-        int * dept;
-        int * course_num;
+        int temp = 0, *dept = &temp;
+        int temp2 = 0, *course_num = &temp2;
         separate_course_parts(user_menu_input, div, dept, course_num);
-        printf("Separated: %s, %d, %d\n", div, *dept, *course_num);
-
+        int idx = find_course_in_catalog(catalog, line_count, div, dept, course_num);
+        print_course_info(catalog[idx]);
         break;
 
     }
