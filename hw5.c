@@ -55,18 +55,41 @@ int main(int argc, char const *argv[]) {
   menu_selection = user_menu_input[0];
   while (menu_selection != 'q') {
     switch (menu_selection) {
+      int idx;
       case '1': // Display the catalog
         for (int j = 0; j < line_count; j++) {
           print_course_info(catalog[j]);
         }
         break;
       case '2':
-        get_course_input(user_menu_input);
-        char div[3];
-        int temp = 0, *dept = &temp;
-        int temp2 = 0, *course_num = &temp2;
-        separate_course_parts(user_menu_input, div, dept, course_num);
-        int idx = find_course_in_catalog(catalog, line_count, div, dept, course_num);
+        idx = -1;
+        do {
+          get_course_input(user_menu_input);
+          char div[3];
+          int temp = 0, *dept = &temp;
+          int temp2 = 0, *course_num = &temp2;
+          separate_course_parts(user_menu_input, div, dept, course_num);
+          idx = find_course_in_catalog(catalog, line_count, div, dept, course_num);
+          if (idx == -1) {
+            course_absent_msg();
+          } else {
+            print_course_info(catalog[idx]);
+          }
+        } while (idx == -1);
+        break;
+      case '3':
+        idx = -1;
+        do {
+          get_course_input(user_menu_input);
+          char div[3];
+          int temp = 0, *dept = &temp;
+          int temp2 = 0, *course_num = &temp2;
+          separate_course_parts(user_menu_input, div, dept, course_num);
+          idx = find_course_in_catalog(catalog, line_count, div, dept, course_num);
+        } while (idx == -1);
+        get_title(user_menu_input);
+        print_course_info(catalog[idx]);
+        set_title(catalog[idx], user_menu_input);
         print_course_info(catalog[idx]);
         break;
 

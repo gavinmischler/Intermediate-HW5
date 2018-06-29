@@ -134,3 +134,18 @@ void get_course_input(char user_menu_input[]) {
 void print_course_info(Course * u) {
   printf("%s.%d.%d %.1f %s", u->div, u->dept, u->course_num, u->credits, u->title);
 }
+
+void get_title(char user_menu_input[]) {
+  fgetc(stdin);
+  new_title_prompt();
+  fgets(user_menu_input, 100, stdin);
+  while (strlen(user_menu_input) > 32) {
+    invalid_input_msg();
+    new_title_prompt();
+    fgets(user_menu_input, 100, stdin);
+  }
+}
+
+void set_title(Course * u, char new_title[]) {
+  strcpy(u->title, new_title);
+}

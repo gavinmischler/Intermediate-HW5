@@ -20,5 +20,7 @@ int is_valid_course(char course_id[], unsigned long id_length);
 void get_course_input(char user_menu_input[]);
 void separate_course_parts(char course_id[], char div[], int * dept, int * course_num);
 int find_course_in_catalog(Course * catalog[], int catalog_sz, char div[], int *dept, int *course_num);
+void get_title(char user_menu_input[]);
+void set_title(Course * u, char new_title[]);
 
 #endif // CATALOG defined
