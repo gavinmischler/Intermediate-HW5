@@ -22,5 +22,7 @@ void separate_course_parts(char course_id[], char div[], int * dept, int * cours
 int find_course_in_catalog(Course * catalog[], int catalog_sz, char div[], int *dept, int *course_num);
 void get_title(char user_menu_input[]);
 void set_title(Course * u, char new_title[]);
+float get_credits(char user_menu_input[]);
+void set_credits(Course * u, float new_credits);
 
 #endif // CATALOG defined

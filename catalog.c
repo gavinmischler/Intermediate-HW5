@@ -146,6 +146,22 @@ void get_title(char user_menu_input[]) {
   }
 }
 
+float get_credits(char user_menu_input[]) {
+  fgetc(stdin);
+  float new_credits;
+  new_credit_prompt();
+  fgets(user_menu_input, 100, stdin);
+  while (!sscanf(user_menu_input, "%f", &new_credits) || user_menu_input[0] == '\n') {
+    new_credit_prompt();
+    fgets(user_menu_input, 100, stdin);
+  }
+  return new_credits;
+}
+
 void set_title(Course * u, char new_title[]) {
   strcpy(u->title, new_title);
+}
+
+void set_credits(Course * u, float new_credits) {
+  u->credits = new_credits;
 }

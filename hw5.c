@@ -92,7 +92,21 @@ int main(int argc, char const *argv[]) {
         set_title(catalog[idx], user_menu_input);
         print_course_info(catalog[idx]);
         break;
-
+      case '4':
+        idx = -1;
+        do {
+          get_course_input(user_menu_input);
+          char div[3];
+          int temp = 0, *dept = &temp;
+          int temp2 = 0, *course_num = &temp2;
+          separate_course_parts(user_menu_input, div, dept, course_num);
+          idx = find_course_in_catalog(catalog, line_count, div, dept, course_num);
+        } while (idx == -1);
+        float new_credits = get_credits(user_menu_input);
+        print_course_info(catalog[idx]);
+        set_credits(catalog[idx], new_credits);
+        print_course_info(catalog[idx]);
+        break;
     }
 
 
